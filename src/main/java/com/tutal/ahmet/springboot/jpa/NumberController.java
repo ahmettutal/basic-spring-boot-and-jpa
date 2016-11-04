@@ -2,6 +2,7 @@ package com.tutal.ahmet.springboot.jpa;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -20,7 +21,7 @@ public class NumberController {
     @Autowired
     NumbersRepository numbersRepository;
 
-    @RequestMapping(value = "/addNumber", method = RequestMethod.PUT, produces = {"application/json"})
+    @RequestMapping(value = "/addNumber", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> addNumber(@RequestParam(value = "number") int num) {
 
         Numbers oldRecord = numbersRepository.findByNumber(num);
@@ -40,7 +41,7 @@ public class NumberController {
         return ResponseEntity.ok(new Result("200", "The number added to Numbers Table"));
     }
 
-    @RequestMapping(value = "/deleteNumber", method = RequestMethod.DELETE, produces = {"application/json"})
+    @RequestMapping(value = "/deleteNumber", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> deleteNumber(@RequestParam(value = "number") int num) {
 
         Numbers oldRecord = numbersRepository.findByNumber(num);
@@ -52,7 +53,7 @@ public class NumberController {
         return ResponseEntity.ok(new Result("200", "The number deleted on Numbers Table successfully"));
     }
 
-    @RequestMapping(value = "/getMaxNumber", produces = {"application/json"})
+    @RequestMapping(value = "/getMaxNumber", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Numbers> getMaxNumber() {
 
         Numbers number = numbersRepository.findTopByOrderByNumberDesc();
@@ -60,7 +61,7 @@ public class NumberController {
         return ResponseEntity.ok(number);
     }
 
-    @RequestMapping(value = "/getMinNumber", produces = {"application/json"})
+    @RequestMapping(value = "/getMinNumber", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Numbers> getMinNumber() {
 
         Numbers number = numbersRepository.findTopByOrderByNumberAsc();
@@ -68,7 +69,7 @@ public class NumberController {
         return ResponseEntity.ok(number);
     }
 
-    @RequestMapping(value = "/numbers", produces = {"application/json"})
+    @RequestMapping(value = "/numbers", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Iterable<Numbers>> findAllNumbers(@RequestParam(value = "orderby", defaultValue = "ASC") String orderby) {
 
         Sort.Direction direction = Sort.Direction.ASC;
