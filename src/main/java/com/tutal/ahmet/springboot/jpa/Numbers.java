@@ -1,5 +1,7 @@
 package com.tutal.ahmet.springboot.jpa;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -22,6 +24,7 @@ public class Numbers implements Serializable {
     @Column(name = "INSERT_DATE", nullable = false)
     private String insertDate;
 
+    @JsonIgnore
     public Long getId() {
         return id;
     }
