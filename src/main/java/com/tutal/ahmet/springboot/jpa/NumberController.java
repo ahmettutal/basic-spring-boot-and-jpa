@@ -1,5 +1,6 @@
 package com.tutal.ahmet.springboot.jpa;
 
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.MediaType;
@@ -22,8 +23,11 @@ public class NumberController {
     NumbersRepository numbersRepository;
 
     @RequestMapping(value = "/getNumber", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<?> getNumber(@RequestParam(value = "number") int num) {
+    public ResponseEntity<Number> getNumber(@RequestParam(value = "number") int num) throws Exception {
         Number number = numbersRepository.findByNumber(num);
+
+        if (number == null)
+            throw new NotFoundException("The number does not exist!");
 
         return ResponseEntity.ok(number);
     }
