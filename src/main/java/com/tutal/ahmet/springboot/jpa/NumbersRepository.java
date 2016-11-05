@@ -8,17 +8,17 @@ import org.springframework.transaction.annotation.Transactional;
  * Created by tutal on 04.11.2016.
  */
 
-public interface NumbersRepository extends CrudRepository<Numbers, Long> {
+public interface NumbersRepository extends CrudRepository<Number, Long> {
 
-    Numbers findByNumber(int number);
+    Number findByNumber(int number);
 
     @Transactional
     Long deleteByNumber(int number);
 
-    Numbers findTopByOrderByNumberDesc();
+    Number findTopByOrderByNumberDesc();
 
-    Numbers findTopByOrderByNumberAsc();
+    Number findTopByOrderByNumberAsc();
 
-    Iterable<Numbers> findAll(Sort sort);
+    Iterable<Number> findAll(Sort sort);
 
 }

@@ -21,62 +21,65 @@ public class NumberController {
     @Autowired
     NumbersRepository numbersRepository;
 
+    @RequestMapping(value = "/getNumber", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<?> getNumber(@RequestParam(value = "number") int num) {
+        Number number = numbersRepository.findByNumber(num);
+
+        return ResponseEntity.ok(number);
+    }
+
     @RequestMapping(value = "/addNumber", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> addNumber(@RequestParam(value = "number") int num) {
 
-        Numbers oldRecord = numbersRepository.findByNumber(num);
+        Number oldRecord = numbersRepository.findByNumber(num);
         if (oldRecord != null)
-            return ResponseEntity.ok(new Result("409", "This Number already exists on Numbers Table"));
+            return ResponseEntity.ok(new Result("409", "This Number already exists on Number Table"));
 
-        Numbers number = new Numbers();
-        number.setNumber(num);
+        Date currentDate = new java.sql.Date(new Date().getTime());
 
-        Date today = new Date();
-        Date currentDate = new java.sql.Date(today.getTime());
-
-        number.setInsertDate(currentDate.toString());
+        Number number = new Number(num, currentDate.toString());
 
         numbersRepository.save(number);
 
-        return ResponseEntity.ok(new Result("200", "The number added to Numbers Table"));
+        return ResponseEntity.ok(new Result("200", "The number added to Number Table"));
     }
 
     @RequestMapping(value = "/deleteNumber", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Result> deleteNumber(@RequestParam(value = "number") int num) {
 
-        Numbers oldRecord = numbersRepository.findByNumber(num);
+        Number oldRecord = numbersRepository.findByNumber(num);
         if (oldRecord == null)
-            return ResponseEntity.ok(new Result("404", "This Number was not found on Numbers Table"));
+            return ResponseEntity.ok(new Result("404", "This Number was not found on Number Table"));
 
         numbersRepository.deleteByNumber(num);
 
-        return ResponseEntity.ok(new Result("200", "The number deleted on Numbers Table successfully"));
+        return ResponseEntity.ok(new Result("200", "The number deleted on Number Table successfully"));
     }
 
     @RequestMapping(value = "/getMaxNumber", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Numbers> getMaxNumber() {
+    public ResponseEntity<Number> getMaxNumber() {
 
-        Numbers number = numbersRepository.findTopByOrderByNumberDesc();
+        Number number = numbersRepository.findTopByOrderByNumberDesc();
 
         return ResponseEntity.ok(number);
     }
 
     @RequestMapping(value = "/getMinNumber", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Numbers> getMinNumber() {
+    public ResponseEntity<Number> getMinNumber() {
 
-        Numbers number = numbersRepository.findTopByOrderByNumberAsc();
+        Number number = numbersRepository.findTopByOrderByNumberAsc();
 
         return ResponseEntity.ok(number);
     }
 
-    @RequestMapping(value = "/numbers", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Iterable<Numbers>> findAllNumbers(@RequestParam(value = "orderby", defaultValue = "ASC") String orderby) {
+    @RequestMapping(value = "/getAllNumbers", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Iterable<Number>> findAllNumbers(@RequestParam(value = "orderby", defaultValue = "ASC") String orderby) {
 
         Sort.Direction direction = Sort.Direction.ASC;
         if (orderby.equals("DESC"))
             direction = Sort.Direction.DESC;
 
-        Iterable<Numbers> numbers = numbersRepository.findAll(new Sort(direction, "number"));
+        Iterable<Number> numbers = numbersRepository.findAll(new Sort(direction, "number"));
 
         return ResponseEntity.ok(numbers);
     }

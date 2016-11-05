@@ -11,7 +11,7 @@ import java.io.Serializable;
 
 @Entity
 @Table(name = "NUMBERS")
-public class Numbers implements Serializable {
+public class Number implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -23,6 +23,14 @@ public class Numbers implements Serializable {
 
     @Column(name = "INSERT_DATE", nullable = false)
     private String insertDate;
+
+    protected Number() {
+    }
+
+    public Number(int number, String insertDate) {
+        this.number = number;
+        this.insertDate = insertDate;
+    }
 
     @JsonIgnore
     public Long getId() {
