@@ -1,4 +1,4 @@
-package com.tutal.ahmet.springboot.jpa;
+package com.tutal.ahmet.springboot.jpa.model;
 
 import java.io.Serializable;
 

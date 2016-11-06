@@ -1,4 +1,4 @@
-package com.tutal.ahmet.springboot.jpa;
+package com.tutal.ahmet.springboot.jpa.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 

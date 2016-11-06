@@ -1,7 +1,9 @@
-package com.tutal.ahmet.springboot.jpa;
+package com.tutal.ahmet.springboot.jpa.controller;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.common.collect.Lists;
+import com.tutal.ahmet.springboot.jpa.Runner;
+import com.tutal.ahmet.springboot.jpa.domain.Number;
+import com.tutal.ahmet.springboot.jpa.model.Result;
+import com.tutal.ahmet.springboot.jpa.repository.NumbersRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +16,7 @@ import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -210,10 +213,10 @@ public class NumberControllerTest {
         numbersRepository.save(number2);
 
         // Call the API for get all numbers
-        Iterable<Number> createdNumbers = restTemplate.getForObject(BASE_URI + "/getAllNumbers", Iterable.class);
+        List<Number> createdNumbers = restTemplate.getForObject(BASE_URI + "/getAllNumbers", List.class);
 
         // Assert createdNumbers size
-        assertTrue("The getAllNumbers endpoint test was Failed !", Lists.newArrayList(createdNumbers).size() == 2);
+        assertTrue("The getAllNumbers endpoint test was Failed !", createdNumbers.size() == 2);
 
         // Delete the tested numbers
         numbersRepository.delete(number1);
