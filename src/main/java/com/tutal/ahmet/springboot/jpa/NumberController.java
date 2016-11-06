@@ -23,21 +23,21 @@ public class NumberController {
     NumbersRepository numbersRepository;
 
     @RequestMapping(value = "/getNumber", produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Number> getNumber(@RequestParam(value = "number") int num) throws Exception {
+    public ResponseEntity<Number> getNumber(@RequestParam(value = "number") Integer num) throws Exception {
         Number number = numbersRepository.findByNumber(num);
 
         if (number == null)
-            throw new NotFoundException("The number does not exist!");
+            throw new NotFoundException("The number does not exist on NUMBERS Table!");
 
         return ResponseEntity.ok(number);
     }
 
-    @RequestMapping(value = "/addNumber", method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Result> addNumber(@RequestParam(value = "number") int num) {
+    @RequestMapping(value = "/addNumber", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<Result> addNumber(@RequestParam(value = "number") Integer num) {
 
         Number oldRecord = numbersRepository.findByNumber(num);
         if (oldRecord != null)
-            return ResponseEntity.ok(new Result("409", "This Number already exists on Number Table"));
+            return ResponseEntity.ok(new Result("409", "The Number already exists on NUMBERS Table"));
 
         Date currentDate = new java.sql.Date(new Date().getTime());
 
@@ -45,19 +45,19 @@ public class NumberController {
 
         numbersRepository.save(number);
 
-        return ResponseEntity.ok(new Result("200", "The number added to Number Table"));
+        return ResponseEntity.ok(new Result("200", "The Number was added to NUMBERS Table"));
     }
 
     @RequestMapping(value = "/deleteNumber", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Result> deleteNumber(@RequestParam(value = "number") int num) {
+    public ResponseEntity<Result> deleteNumber(@RequestParam(value = "number") Integer num) {
 
         Number oldRecord = numbersRepository.findByNumber(num);
         if (oldRecord == null)
-            return ResponseEntity.ok(new Result("404", "This Number was not found on Number Table"));
+            return ResponseEntity.ok(new Result("404", "The Number was not found on NUMBERS Table"));
 
         numbersRepository.deleteByNumber(num);
 
-        return ResponseEntity.ok(new Result("200", "The number deleted on Number Table successfully"));
+        return ResponseEntity.ok(new Result("200", "The number was deleted from NUMBERS Table"));
     }
 
     @RequestMapping(value = "/getMaxNumber", produces = MediaType.APPLICATION_JSON_VALUE)

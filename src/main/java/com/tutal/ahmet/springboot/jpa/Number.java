@@ -19,7 +19,7 @@ public class Number implements Serializable {
     private Long id;
 
     @Column(name = "NUMBER", nullable = false)
-    private int number;
+    private Integer number;
 
     @Column(name = "INSERT_DATE", nullable = false)
     private String insertDate;
@@ -27,7 +27,7 @@ public class Number implements Serializable {
     protected Number() {
     }
 
-    public Number(int number, String insertDate) {
+    public Number(Integer number, String insertDate) {
         this.number = number;
         this.insertDate = insertDate;
     }
@@ -41,11 +41,11 @@ public class Number implements Serializable {
         this.id = id;
     }
 
-    public int getNumber() {
+    public Integer getNumber() {
         return number;
     }
 
-    public void setNumber(int number) {
+    public void setNumber(Integer number) {
         this.number = number;
     }
 

@@ -11,6 +11,9 @@ public class Result implements Serializable {
     String code;
     String message;
 
+    public Result() {
+    }
+
     public Result(String code, String message) {
         this.code = code;
         this.message = message;
