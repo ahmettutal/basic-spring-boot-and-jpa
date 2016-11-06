@@ -26,7 +26,6 @@ import static org.junit.Assert.*;
 @WebIntegrationTest
 public class NumberControllerTest {
 
-    public static final ObjectMapper OBJECT_MAPPER = new ObjectMapper();
     final String CURRENT_DATE = new java.sql.Date(new Date().getTime()).toString();
     final String BASE_URI = "http://localhost:8080";
 
